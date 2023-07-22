@@ -8,8 +8,37 @@ function programaPrincipal() {
     .then(data => {
         productos = data.productos
         console.log(productos)
+        function crearTarjeta(productos, carrito) {
+            // creacion de tarjetas de productos
+                let contenedor = document.getElementById("padre")
+                contenedor.innerHTML = ""
+            
+                productos.forEach(element => {
+                    let mensaje = element.precio
+                    
+                    let tarjeta = document.createElement("div")
+            
+                    if (element.stock === 0) {
+                        mensaje = "Sin stock"
+                    }
+            
+                    tarjeta.classList.add("tarjetaProducto")
+            
+                    tarjeta.innerHTML = `
+                    <h3>${element.nombre}</h3>
+                    <img src="${element.rutaImagen}">
+                    <h4>$${mensaje}</h4>
+                    <a id="${element.id}" class="btn btn-secondary"  role="button" aria-disabled="false">Agregar</a>
+                    `
+                    contenedor.append(tarjeta)
+            
+                    let botonAgregarCarrito = document.getElementById(element.id)
+                    botonAgregarCarrito.addEventListener("click", () => agregarAlCarrito(productos, element.id, carrito))
+                })
+            }
+            crearTarjeta (productos, carrito)
     })
-
+  
     //creacion de carrito
     let carrito = []
     let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
@@ -31,7 +60,7 @@ function programaPrincipal() {
 
     crearFiltros(productos, contenedorFiltros, carrito)
 
-    crearTarjeta (productos, carrito)
+   
 
     crearCarrito (carrito)
 
@@ -41,34 +70,7 @@ function programaPrincipal() {
    
 programaPrincipal()
 
-function crearTarjeta(array, carrito) {
-// creacion de tarjetas de productos
-    let contenedor = document.getElementById("padre")
-    contenedor.innerHTML = ""
 
-    array.forEach(element => {
-        let mensaje = element.precio
-        
-        let tarjeta = document.createElement("div")
-
-        if (element.stock === 0) {
-            mensaje = "Sin stock"
-        }
-
-        tarjeta.classList.add("tarjetaProducto")
-
-        tarjeta.innerHTML = `
-        <h3>${element.nombre}</h3>
-        <img src="${element.rutaImagen}">
-        <h4>$${mensaje}</h4>
-        <a id="${element.id}" class="btn btn-secondary"  role="button" aria-disabled="false">Agregar</a>
-        `
-        contenedor.append(tarjeta)
-
-        let botonAgregarCarrito = document.getElementById(element.id)
-        botonAgregarCarrito.addEventListener("click", () => agregarAlCarrito(array, element.id, carrito))
-    })
-}
 
 function filtrar (productos, carrito) {
     let contenedor = document.getElementById("padre")
