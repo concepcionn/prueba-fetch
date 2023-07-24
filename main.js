@@ -117,7 +117,7 @@ function mostrarOcultar() {
 function agregarAlCarrito(productos, id, carrito) {
     console.log(id);
     let productoBuscado = productos.find(prod => prod.id === id)
-    let posicionProdEnCarrito = carrito.findIndex(prod => prod.id === id)
+    let posicionProdEnCarrito = carrito?.findIndex(prod => prod.id === id)
 
     if (posicionProdEnCarrito !== -1) {
         carrito[posicionProdEnCarrito].unidades++
@@ -163,7 +163,7 @@ function crearCarrito (carrito) {
 function finalizarCompra (carrito) {
     let carritoReal = document.getElementById("carrito")
     carritoReal.innerHTML = ""
-    localStorage.clear()
+    localStorage.removeItem(carrito)
     carrito = []
 }
 
