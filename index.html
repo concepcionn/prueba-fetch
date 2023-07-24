@@ -36,11 +36,25 @@
             <div id="padre"></div>
         </div>
         <!--carrito-->
-        <div id="contenedorCarrito" class="oculto">
-            <div id="carrito"></div>
-            
-            <button id="finalizar">Finalizar compra</button>
-        </div>
+        <table class="contenedorCarrito" class="oculto">
+            <thead>
+                <tr>
+                    <th>Unidades</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="carrito">
+                <!-- Aquí se agregarán los productos del carrito -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Total:</td>
+                    <td id="totalCarrito">$0</td>
+                </tr>
+            </tfoot>
+        </table>
         
     </main>
 

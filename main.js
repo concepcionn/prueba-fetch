@@ -1,44 +1,40 @@
 function programaPrincipal() {
-
-    let productos = []
-     //JSON Local con Fetch
-    const urlLocal = "./productos.json"
-   
+    let productos = [];
+    const urlLocal = "./productos.json";
 
     fetch(urlLocal)
     .then(response => response.json())
     .then(data => {
-        productos = data.productos
-        console.log(productos)
-    })
-  
-    //creacion de carrito
-    let carrito = []
-    let carritoJSON = JSON.parse(localStorage.getItem("carrito"))
+        productos = data.productos;
+        console.log(productos);
 
-    if (carritoJSON) {
-    carrito = carritoJSON
-    }
+        // Creación de carrito
+        let carrito = [];
+        let carritoJSON = JSON.parse(localStorage.getItem("carrito"));
 
-    //filtro de busqueda
-    //por nombre
-    let buscador = document.getElementById("buscador")
-    buscador.addEventListener("input", () => filtrar(productos, carrito))
+        if (carritoJSON) {
+            carrito = carritoJSON;
+        }
 
-    let contenedorFiltros = document.getElementById("filtros")
+        // Filtro de búsqueda por nombre
+        let buscador = document.getElementById("buscador");
+        buscador.addEventListener("input", () => filtrar(productos, carrito));
 
-    //carrito
-    let botonCarrito = document.getElementById("botonCarrito")
-    botonCarrito.addEventListener("click", mostrarOcultar)
+        let contenedorFiltros = document.getElementById("filtros");
 
-    crearFiltros(productos, contenedorFiltros, carrito)
+        // Botones de filtro por categoría
+        crearFiltros(productos, contenedorFiltros, carrito);
 
-    crearTarjeta(productos, carrito)
+        crearTarjeta(productos, carrito);
 
-    crearCarrito (carrito)
+        let botonCarrito = document.getElementById("botonCarrito");
+        botonCarrito.addEventListener("click", mostrarOcultar);
 
-    let finalizar = document.getElementById("finalizar")
-    finalizar.addEventListener("click", () => finalizarCompra(carrito))
+        crearCarrito(carrito);
+
+        let finalizar = document.getElementById("finalizar");
+        finalizar.addEventListener("click", () => finalizarCompra(carrito));
+    });
 }
    
 programaPrincipal()
@@ -139,21 +135,16 @@ function agregarAlCarrito(productos, id, carrito) {
 
 function crearCarrito (carrito) {
     let carritoReal = document.getElementById("carrito")
-    carritoReal.innerHTML = `
-        <a>Unidades</a>
-        <a>Nombre</a>
-        <a>Precio</a>
-        <a>Subtotal</a> 
-    `
+    carritoReal.innerHTML = ""
 
     carrito.forEach(prod => {
-        let elementoCarrito = document.createElement("div")
-        elementoCarrito.classList.add("elementoCarrito")
+        let elementoCarrito = document.createElement("tr")
+        
         elementoCarrito.innerHTML = `
-            <p>${prod.unidades}<p> 
-            <p>${prod.nombre}</p> 
-            <p>${prod.precioUnitario}</p> 
-            <p>${prod.subtotal}</p>
+            <tr>${prod.unidades}<tr> 
+            <tr>${prod.nombre}</tr> 
+            <tr>${prod.precioUnitario}</tr> 
+            <tr>${prod.subtotal}</tr>
         `
         carritoReal.append(elementoCarrito)
     })      
